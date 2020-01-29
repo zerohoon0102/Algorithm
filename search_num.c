@@ -28,4 +28,7 @@ int main()
     }
     for (int i = 0; i < num_of_search; i++)
         printf("%d\n", num_check[i]);
+    free(input_num);
+    free(search_num);
+    free(num_check);
 }
