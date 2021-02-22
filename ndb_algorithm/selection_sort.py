@@ -14,3 +14,6 @@ def selection_sort(n_arr):
         n = n+1
     
     print(n_arr)
+
+# Time Complexity : O(n*n)
+# better than Bubble Sort
