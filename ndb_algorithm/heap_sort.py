@@ -40,5 +40,5 @@ def heap_sort(n_arr):
             n_arr[0:length] = reheapify(n_arr[0:length], length)
     print(n_arr)
 
-if __name__ == "__main__":
-    heap_sort([4,2,1,3,6])
+# Time Complexity : O( n * log n )
+# Low Memory Occupy
