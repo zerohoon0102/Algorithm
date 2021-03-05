@@ -1,7 +1,7 @@
 def getParent(node, n):
     if node[n] == n:
         return n
-    node[n] = getParent(node, n)
+    node[n] = getParent(node, node[n])
     return node[n]
 
 def unionParent(node, n1, n2):
