@@ -1,5 +1,5 @@
 n = 7
-def topologtSort(inDegree, fromTo):
+def topologySort(inDegree, fromTo):
     result = []
     queue = []
     for i in range(0, n):
@@ -34,4 +34,4 @@ if __name__=="__main__":
     fromTo.append([6])
     inDegree[6] += 1
     fromTo.append([])
-    topologtSort(inDegree, fromTo)
+    topologySort(inDegree, fromTo)
