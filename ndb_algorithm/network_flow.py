@@ -1,12 +1,17 @@
 MAX = 100
-INF = 2100000000
+INF = 2000000000
+
+def double_arr(n, a):
+    if a == None:
+        return [[] for __ in range(n)]
+    return [[a for _ in range(n)] for __ in range(n)]
 
 n = 6
-c = [[0]*MAX]*MAX
-f = [[0]*MAX]*MAX
+c = double_arr(MAX, 0)
+f = double_arr(MAX, 0)
 d = [-1]*MAX
 
-a = [[]]*MAX
+a = double_arr(MAX, None)
 
 def maxFlow(start, end):
     result = 0
