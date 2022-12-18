@@ -4,15 +4,12 @@ def solution(alp, cop, problems):
     answer = 100000
     problems.append([0,0,0,1,1])
     problems.append([0,0,1,0,1])
-    alp_problems = sorted(problems, key=lambda x: -(x[2]/x[4]))
-    cop_problems = sorted(problems, key=lambda x: -(x[3]/x[4]))
-    problems.sort(key=lambda x: (-(x[2]+x[3])/x[4], x[4]))
-    print(alp_problems)
-    print(cop_problems)
-    print(problems)
+    alp_problems = sorted(problems, key=lambda x: (-(x[2]/x[4]), x[4]))
+    cop_problems = sorted(problems, key=lambda x: (-(x[3]/x[4]), x[4]))
+    
     dp = [[100000000]*301 for _ in range(301)]
     dp[alp][cop] = 0
-    target = [0,0]
+    target = [alp,cop]
     for problem in problems:
         target[0] = max(target[0], problem[0])
         target[1] = max(target[1], problem[1])
@@ -26,32 +23,37 @@ def solution(alp, cop, problems):
             continue
         if alp < target[0] and cop < target[1]:
             for problem in problems:
-                if alp >= problem[0] and cop >= problem[1]:
+                if alp >= problem[0] and cop >= problem[1] :
                     nxt_cost = cost+problem[4]
                     nxt_alp = alp+problem[2]
                     nxt_cop = cop+problem[3]
+                    
+                    nxt_alp = min(nxt_alp, 300)
+                    nxt_cop = min(nxt_cop, 300)
                     if dp[nxt_alp][nxt_cop] > nxt_cost:
                         dp[nxt_alp][nxt_cop] = nxt_cost
                         queue.append((nxt_alp, nxt_cop))
-        if alp < target[0]:
+        elif alp < target[0] and cop >= target[1]:
             for problem in alp_problems:
                 if alp >= problem[0] and cop >= problem[1]:
                     nxt_cost = cost+problem[4]
                     nxt_alp = alp+problem[2]
                     nxt_cop = cop+problem[3]
                     break
-            nxt_alp = min(nxt_alp, 300)
+            nxt_alp = min(300, nxt_alp)
+            nxt_cop = min(300, nxt_cop)
             if dp[nxt_alp][nxt_cop] > nxt_cost:
                 dp[nxt_alp][nxt_cop] = nxt_cost
                 queue.append((nxt_alp, nxt_cop))
-        if cop < target[1]:
+        elif alp >= target[0] and cop < target[1]:
             for problem in cop_problems:
                 if alp >= problem[0] and cop >= problem[1]:
                     nxt_cost = cost+problem[4]
                     nxt_alp = alp+problem[2]
                     nxt_cop = cop+problem[3]
                     break
-            nxt_cop = min(nxt_cop, 300)
+            nxt_alp = min(300, nxt_alp)
+            nxt_cop = min(300, nxt_cop)
             if dp[nxt_alp][nxt_cop] > nxt_cost:
                 dp[nxt_alp][nxt_cop] = nxt_cost
                 queue.append((nxt_alp, nxt_cop))
