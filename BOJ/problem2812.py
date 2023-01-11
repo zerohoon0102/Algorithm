@@ -8,20 +8,17 @@ minus = 0
 cur = 1
 left = 0
 prev_n = n_s[0]
-result = n_s[0]
+result = [n_s[0]]
 
 while cur < N:
     n = n_s[cur]
     if n > prev_n:
-        i = 1
-        while i <= len(result) and result[len(result)-i] < n and minus < K:
+        while result and result[-1] < n and minus < K:
+            result.pop()
             minus += 1
-            i += 1
-        if i > 1:
-            result = result[:len(result)-i+1]
-    result += n
+    result.append(n)
     prev_n = n
     cur += 1
 rest = len(result) - (K-minus)
 result = result[:rest]
-print(result)
+print(''.join(result))
