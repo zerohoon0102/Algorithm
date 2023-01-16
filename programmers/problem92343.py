@@ -7,24 +7,7 @@ def solution(info, edges):
             tree[s][0] = e
         else:
             tree[s][1] = e
-    wolf_sum = [0]*len(info)
-    wolf_sheep = [[] for _ in range(len(info))]
-    queue = deque([(0,[])])
-    while queue:
-        node, wolfs = queue.popleft()
-        for i in range(2):
-            if tree[node][i] != -1:
-                nxt = tree[node][i]
-                if info[nxt] == 1:
-                    nxt_wolfs = wolfs.copy()
-                    nxt_wolfs.append(nxt)
-                    queue.append((nxt, nxt_wolfs))
-                else:
-                    wolf_sum[nxt] = len(wolfs)
-                    queue.append((nxt, wolfs))
-                    wolf_sheep[nxt] = wolfs.copy()
-                    for wolf in wolfs:
-                        wolf_sheep[wolf].append(nxt)
+    
     answer = 0
     def dfs(can, ans, wolf_num):
         result = ans
