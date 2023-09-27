@@ -14,7 +14,7 @@ class Solution:
             if cnt == 4:
                 return True
             for i in range(idx, length):
-                if used[i]:
+                if used[i] or (i and not used[i-1] and matchsticks[i-1] == matchsticks[i]):
                     continue
                 nxt_v = cur+matchsticks[i]
                 if nxt_v > one_side:
