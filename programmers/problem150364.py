@@ -1,20 +1,17 @@
-from collections import deque
-
 def dfs(node, idx, turns, turn, cycle):
     if node[idx]:
         for i, nxt_idx in enumerate(node[idx]):
             nxt_turn = turn + i*cycle
             dfs(node, nxt_idx, turns, nxt_turn, cycle*len(node[idx]))
     else:
-        for i in range(turn, 10101, cycle):
+        for i in range(turn, len(turns), cycle):
             turns[i] = idx
                 
     
 def solution(edges, target):
-    global leaf_node
     answer = []
     node = [[] for _ in range(len(edges)+1)]
-    turns = [-1]*10101
+    turns = [-1]*(len(node)*100 + 1)
     
     for parent, child in edges:
         node[parent-1].append(child-1)
