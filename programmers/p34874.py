@@ -42,9 +42,11 @@ def solution(sales, links):
             else:
                 team.set_least_earn(sales[team_mate])
         
+        # 말단 팀 기록
         if len(team.lead_team_mate_list) == 0:
             leaf_teams.append(team_lead)
     
+    # 0: 팀 리드를 포함, 1: 팀 리드를 미포함  값.
     dp = {team_lead : [None, None] for team_lead in teams}
     
     # bottom-up 방식으로 값 추출
@@ -52,6 +54,7 @@ def solution(sales, links):
         team_lead = leaf_teams.popleft()
         team = teams[team_lead]
         
+        # 하위 팀에서 차출하는 값 이용
         get_bottom_team = 0
         chk = False
         for lead_team_mate in team.lead_team_mate_list:
@@ -67,6 +70,8 @@ def solution(sales, links):
         if chk:
             dp[team_lead][1] = get_bottom_team
         else:
+            # 하위 팀 중, 리드를 포함하는 것이 더 나은 결과를 도출하는 팀이 없는 경우
+            ## 하위 팀 중 (리드 포함 - 리드 미포함) 값이 가장 적은 팀을 선택하여 리드 포함으로 변경하여 값 도출
             min_diff_sel = 2**31-1
             for lead_team_mate in team.lead_team_mate_list:
                 diff_sel_team_earn = dp[lead_team_mate][0] - dp[lead_team_mate][1]
@@ -75,6 +80,7 @@ def solution(sales, links):
             if len(team.lead_team_mate_list) > 0:
                 dp[team_lead][1] = get_bottom_team + min_diff_sel
             
+            ## 하위 팀을 그대로 두고, 팀 리드가 아닌 다른 팀원을 선택하여 값 도출
             if dp[team_lead][1] == None:
                 dp[team_lead][1] = team.least_earn + get_bottom_team
             else:
